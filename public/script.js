@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('task-container');
     const filterBtns = document.querySelectorAll('.filter-btn');
-    let allTasks = []; // Store tasks locally for instant filtering
+    const taskForm = document.getElementById('add-task-form');
+    let allTasks = []; 
 
     // 1. Initial Data Fetch
     fetch('/api/tasks')
@@ -15,19 +16,45 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Filter Button Logic
     filterBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
-            // Update active button styling
             filterBtns.forEach(b => b.classList.remove('active'));
             e.target.classList.add('active');
-            
-            // Render filtered tasks
             const filterValue = e.target.getAttribute('data-filter');
             renderTasks(filterValue);
         });
     });
 
-    // 3. Render Tasks based on filter
+    // 3. Add New Task Logic
+    taskForm.addEventListener('submit', (e) => {
+        e.preventDefault(); // Prevents the browser from refreshing the page
+        
+        const titleInput = document.getElementById('task-title').value;
+        const assigneeInput = document.getElementById('task-assignee').value;
+
+        fetch('/api/tasks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: titleInput, assignee: assigneeInput })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // Add the new task to the local array
+                allTasks.push(data.task);
+                
+                // Keep the current filter active when rendering the new task
+                const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+                renderTasks(activeFilter);
+                updateProgress();
+                
+                // Clear the text box for the next input
+                taskForm.reset(); 
+            }
+        });
+    });
+
+    // 4. Render Tasks
     function renderTasks(filter) {
-        container.innerHTML = ''; // Clear current cards
+        container.innerHTML = ''; 
         
         const filteredTasks = filter === 'All' 
             ? allTasks 
@@ -61,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         statusSpan.innerText = nextStatus;
                         setCardColor(card, nextStatus);
                         
-                        // Update the local array and the progress bar
                         const taskIndex = allTasks.findIndex(t => t.id === task.id);
                         allTasks[taskIndex].status = nextStatus;
                         updateProgress();
@@ -73,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. Calculate and Update Progress Bar
+    // 5. Calculate Progress
     function updateProgress() {
         const total = allTasks.length;
         const completed = allTasks.filter(t => t.status === 'Completed').length;
@@ -83,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('progress-fill').style.width = `${percentage}%`;
     }
 
-    // Helper Functions
+    // Helpers
     function getNextStatus(current) {
         if (current === 'Not Started') return 'In Progress';
         if (current === 'In Progress') return 'Pending Review';
@@ -92,9 +118,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setCardColor(card, status) {
-        if (status === 'Not Started') card.style.borderLeftColor = '#4F46E5'; // Indigo
-        if (status === 'In Progress') card.style.borderLeftColor = '#F59E0B'; // Amber
-        if (status === 'Pending Review') card.style.borderLeftColor = '#06B6D4'; // Cyan
-        if (status === 'Completed') card.style.borderLeftColor = '#10B981'; // Emerald
+        if (status === 'Not Started') card.style.borderLeftColor = '#4F46E5'; 
+        if (status === 'In Progress') card.style.borderLeftColor = '#F59E0B'; 
+        if (status === 'Pending Review') card.style.borderLeftColor = '#06B6D4'; 
+        if (status === 'Completed') card.style.borderLeftColor = '#10B981'; 
     }
 });

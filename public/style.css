@@ -1,106 +1,60 @@
-:root {
-    --primary: #4F46E5;
-    --secondary: #818CF8;
-    --bg: #F3F4F6;
-    --card: #FFFFFF;
-    --text: #1F2937;
-}
-
-body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    background-color: var(--bg);
-    color: var(--text);
-    margin: 0;
-    padding: 0;
-}
-
-/* Modern Gradient Header */
-header {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: white;
-    padding: 30px 20px;
-    text-align: center;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-header h1 { margin: 0 0 15px 0; font-size: 2.2em; }
-
-/* Progress Bar */
-.progress-container {
-    max-width: 400px;
-    margin: 0 auto;
-}
-.progress-container p { margin: 0 0 8px 0; font-weight: bold; }
-.progress-bar {
-    width: 100%;
-    height: 10px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-    overflow: hidden;
-}
-.progress-fill {
-    height: 100%;
-    background: #10B981; /* Success Green */
-    width: 0%;
-    transition: width 0.4s ease;
-}
-
-/* Filter Buttons */
-.filter-section {
+/* Add Task Form Styling */
+.add-task-section {
+    max-width: 1200px;
+    margin: 20px auto 0;
+    padding: 0 20px;
     display: flex;
     justify-content: center;
-    gap: 10px;
-    padding: 25px 20px 5px;
-    flex-wrap: wrap;
 }
-.filter-btn {
+
+#add-task-form {
+    display: flex;
+    gap: 15px;
     background: var(--card);
-    border: 1px solid #E5E7EB;
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: 600;
-    color: var(--text);
-    transition: all 0.2s;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 800px;
 }
-.filter-btn:hover { border-color: var(--primary); }
-.filter-btn.active {
-    background: var(--primary);
-    color: white;
+
+#add-task-form input {
+    flex: 2;
+    padding: 12px;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#add-task-form select {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    font-size: 1em;
+    outline: none;
+    background: white;
+}
+
+#add-task-form input:focus, #add-task-form select:focus {
     border-color: var(--primary);
 }
 
-/* Grid & Cards */
-.task-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-    padding: 30px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-.task-card {
-    background: var(--card);
-    padding: 25px;
-    border-radius: 16px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-    border-left: 6px solid var(--primary);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.task-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-}
-.task-card h3 { margin-top: 0; font-size: 1.3em; }
-.status-text { font-weight: bold; }
-.assignee {
-    display: inline-block;
-    margin-top: 15px;
-    background: #EEF2FF;
-    color: var(--primary);
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.85em;
+.add-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
     font-weight: bold;
+    font-size: 1em;
+    transition: background 0.2s;
+}
+
+.add-btn:hover {
+    background: var(--secondary);
 }

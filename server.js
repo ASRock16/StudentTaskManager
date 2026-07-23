@@ -4,7 +4,6 @@ const app = express();
 app.use(express.json()); 
 app.use(express.static('public'));
 
-// In-memory array acting as our database
 let tasks = [
     { id: 1, title: 'Hardware Integration', status: 'In Progress', assignee: 'Member 1' },
     { id: 2, title: 'Frontend Dashboard', status: 'Pending Review', assignee: 'Member 2' },
@@ -18,10 +17,9 @@ app.get('/api/tasks', (req, res) => {
     res.json(tasks);
 });
 
-// Receive a status update from the frontend
+// Receive a status update for an existing task
 app.post('/api/tasks/update', (req, res) => {
     const { id, newStatus } = req.body;
-    
     const task = tasks.find(t => t.id === id);
     if (task) {
         task.status = newStatus;
@@ -31,6 +29,24 @@ app.post('/api/tasks/update', (req, res) => {
     }
 });
 
+// Create a brand-new task
+app.post('/api/tasks', (req, res) => {
+    const { title, assignee } = req.body;
+    
+    // Find the highest existing ID and add 1
+    const newId = tasks.length > 0 ? Math.max(...tasks.map(t => t.id)) + 1 : 1;
+    
+    const newTask = {
+        id: newId,
+        title: title,
+        status: 'Not Started', // All new tasks start here
+        assignee: assignee || 'Member 1'
+    };
+    
+    tasks.push(newTask);
+    res.json({ success: true, task: newTask });
+});
+
 app.listen(process.env.PORT || 3000, () => {
-    console.log('Server is running on port 3000');
+    console.log('Server is running without MongoDB.');
 });
