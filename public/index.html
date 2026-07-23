@@ -9,14 +9,28 @@
 <body>
     <header>
         <h1>Project Task Manager</h1>
-        <p>Live Team Dashboard</p>
+        <div class="progress-container">
+            <p>Team Progress: <span id="progress-text">0%</span></p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
     </header>
     
+    <!-- New Filter Section -->
+    <section class="filter-section">
+        <button class="filter-btn active" data-filter="All">All Tasks</button>
+        <button class="filter-btn" data-filter="Member 1">Member 1</button>
+        <button class="filter-btn" data-filter="Member 2">Member 2</button>
+        <button class="filter-btn" data-filter="Member 3">Member 3</button>
+        <button class="filter-btn" data-filter="Member 4">Member 4</button>
+        <button class="filter-btn" data-filter="Member 5">Member 5</button>
+    </section>
+
     <main class="task-grid" id="task-container">
         <!-- JavaScript will inject the task cards here -->
     </main>
 
-    <!-- Links the client-side logic to the HTML -->
     <script src="script.js"></script>
 </body>
 </html>
