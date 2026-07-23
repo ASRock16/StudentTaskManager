@@ -39,7 +39,7 @@ app.post('/api/tasks', (req, res) => {
     const newTask = {
         id: newId,
         title: title,
-        status: 'Not Started', // All new tasks start here
+        status: 'Not Started', 
         assignee: assignee || 'Member 1'
     };
     

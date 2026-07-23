@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Add New Task Logic
     taskForm.addEventListener('submit', (e) => {
-        e.preventDefault(); // Prevents the browser from refreshing the page
+        e.preventDefault(); 
         
         const titleInput = document.getElementById('task-title').value;
         const assigneeInput = document.getElementById('task-assignee').value;
